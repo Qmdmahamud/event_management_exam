@@ -1,0 +1,156 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Event Management</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gray-100 text-gray-800">
+
+  <!-- Header -->
+  <header class="bg-blue-600 text-white p-4">
+    <div class="container mx-auto flex justify-between items-center">
+      <h1 class="text-2xl font-bold">Event Management</h1>
+      <nav>
+        <a href="#events" class="mx-3 hover:underline">Events</a>
+        <a href="#register" class="mx-3 hover:underline">Register</a>
+        <a href="#contact" class="mx-3 hover:underline">Contact</a>
+      </nav>
+    </div>
+  </header>
+
+  <!-- Hero Section -->
+  <section class="bg-blue-100 py-20 text-center">
+    <h2 class="text-4xl font-bold mb-4">Organize & Join Exciting Events</h2>
+    <p class="text-lg">Stay connected with amazing opportunities around you.</p>
+  </section>
+
+  <!-- Upcoming Events -->
+ {% comment %} <div class="container mx-auto px-4 py-8">
+     <section id="events" class="py-16 container mx-auto px-4">
+    <h3 class="text-3xl font-semibold mb-8 text-center">Upcoming Events</h3>
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+      {% for event in events %}
+      <div class="bg-white shadow p-6 rounded-lg">
+        <h4 class="text-xl font-bold mb-2">{{ event.title }}</h4>
+        <p class="mb-2">📅 Date: {{ event.date }}</p>
+        <p class="mb-2">📍 Location: {{ event.location }}</p>
+        <p>{{ event.description }}</p>
+      </div>
+      {% endfor %}
+    </div>
+  </section>
+  <section id="events" class="py-16 container mx-auto px-4">
+    <h3 class="text-3xl font-semibold mb-8 text-center">Completed Events</h3>
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+      {% for event in events %}
+      <div class="bg-white shadow p-6 rounded-lg">
+        <h4 class="text-xl font-bold mb-2">{{ event.title }}</h4>
+        <p class="mb-2">📅 Date: {{ event.date }}</p>
+        <p class="mb-2">📍 Location: {{ event.location }}</p>
+        <p>{{ event.description }}</p>
+      </div>
+      {% endfor %}
+    </div>
+  </section>
+  <section id="events" class="py-16 container mx-auto px-4">
+    <h3 class="text-3xl font-semibold mb-8 text-center">Total Events</h3>
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+      {% for event in events %}
+      <div class="bg-white shadow p-6 rounded-lg">
+        <h4 class="text-xl font-bold mb-2">{{ event.title }}</h4>
+        <p class="mb-2">📅 Date: {{ event.date }}</p>
+        <p class="mb-2">📍 Location: {{ event.location }}</p>
+        <p>{{ event.description }}</p>
+      </div>
+      {% endfor %}
+    </div>
+  </section>
+ </div> {% endcomment %}
+
+ <!-- Events Overview Section -->
+<div id="events" class="container mx-auto px-4 py-16">
+  <h2 class="text-3xl font-bold text-center mb-8">Events Overview</h2>
+
+  <!-- Flex wrapper: Column on mobile, Row on desktop -->
+  <div class="flex flex-col md:flex-row gap-6">
+
+    <!-- Upcoming Events -->
+    <section class="flex-1 bg-white shadow p-6 rounded-lg">
+      <h3 class="text-xl font-semibold mb-4 text-blue-600">Upcoming Events</h3>
+      {% for event in upcoming_events %}
+      <div class="mb-4 border-b pb-2">
+        <h4 class="font-bold">{{ event.title }}</h4>
+        <p class="text-sm">📅 {{ event.date }}</p>
+        <p class="text-sm">📍 {{ event.location }}</p>
+        <p class="text-sm text-gray-600">{{ event.description }}</p>
+      </div>
+      {% empty %}
+      <p class="text-gray-500">No upcoming events.</p>
+      {% endfor %}
+    </section>
+
+    <!-- Completed Events -->
+    <section class="flex-1 bg-white shadow p-6 rounded-lg">
+      <h3 class="text-xl font-semibold mb-4 text-green-600">Completed Events</h3>
+      {% for event in completed_events %}
+      <div class="mb-4 border-b pb-2">
+        <h4 class="font-bold">{{ event.title }}</h4>
+        <p class="text-sm">📅 {{ event.date }}</p>
+        <p class="text-sm">📍 {{ event.location }}</p>
+        <p class="text-sm text-gray-600">{{ event.description }}</p>
+      </div>
+      {% empty %}
+      <p class="text-gray-500">No completed events.</p>
+      {% endfor %}
+    </section>
+
+    <!-- Total Events -->
+    <section class="flex-1 bg-white shadow p-6 rounded-lg">
+      <h3 class="text-xl font-semibold mb-4 text-purple-600">Total Events</h3>
+      {% for event in all_events %}
+      <div class="mb-4 border-b pb-2">
+        <h4 class="font-bold">{{ event.title }}</h4>
+        <p class="text-sm">📅 {{ event.date }}</p>
+        <p class="text-sm">📍 {{ event.location }}</p>
+        <p class="text-sm text-gray-600">{{ event.description }}</p>
+      </div>
+      {% empty %}
+      <p class="text-gray-500">No events found.</p>
+      {% endfor %}
+    </section>
+
+  </div>
+</div>
+
+
+  <!-- Registration Form -->
+  <section id="register" class="bg-white py-16 px-4">
+    <div class="max-w-xl mx-auto">
+      <h3 class="text-3xl font-semibold mb-6 text-center">Register for an Event</h3>
+      <form method="POST" class="space-y-4">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit" class="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700">Submit</button>
+      </form>
+    </div>
+  </section>
+
+  <!-- Contact Section -->
+  <section id="contact" class="bg-gray-200 py-16 px-4">
+    <div class="max-w-xl mx-auto text-center">
+      <h3 class="text-3xl font-semibold mb-4">Contact Us</h3>
+      <p class="mb-4">📧 Email: info@eventbd.com</p>
+      <p>📞 Phone: +880 1234-567890</p>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="bg-blue-600 text-white text-center py-4">
+    <p>&copy; 2025 Event Management. All rights reserved.</p>
+  </footer>
+
+</body>
+</html>

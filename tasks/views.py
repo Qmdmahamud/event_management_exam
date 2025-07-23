@@ -3,7 +3,12 @@ from django.http import HttpResponse
 
 # Create your views here.
 def home(request):
-    return HttpResponse("Welcome to the Event Management System ")
+    # return HttpResponse("Welcome to the Event Management System ")
+    return render(request,"home.html")
+def manager_dashboard(request):
+    return render(request,"manager_dashboard.html")
+def event_base(request):
+    return render(request,"event_base.html")
 def contruct(request):
     return HttpResponse("This is contruct page")
 def show_task(request):
