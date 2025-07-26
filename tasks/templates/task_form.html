@@ -1,18 +1,31 @@
+{% load static %}
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
+    <link rel="stylesheet" href="{% static 'css/output.css' %}">
 </head>
 <body>
-    <form method="GET">
+    <h1 class="text-3xl font-bold text-red-600">Test Tailwind</h1>
+
+   <div class="w-1/2 mx-auto mt-8">
+     <div>
+        {% if message %}
+        <p>{{message}}</p>
+        {% endif %}
+    </div>
+    <form method="POST">
+        {% comment %} <input type="text" class="border-2 border-gray-300 w-full rounded-lg shadow-sm focus:border-rose-300 focus:ring-rose-500 ",placeholder="Enter a Task Titel"> {% endcomment %}
         {% csrf_token %}
-        <label for="">Title</label>
+        {{form.as_p}}
+        {% comment %} <label for="">Title</label>
         <input type="text" name="title">
         <label for="">Number</label>
-        <input type="number" name="number">
+        <input type="number" name="number"> {% endcomment %}
         <button type="submit">submit</button>
     </form>
+   </div>
 </body>
 </html>

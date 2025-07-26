@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+   <div>
+       <ul>
+            {% for task in tasks %}
+                <li>
+                <p>{{task.name}}</p>
+                <p>{{task.num_task}} </p>
+        
+                {% comment %} <p>{{task.title}}</p>
+                    {% for emp in task.assigned_to.all %}
+                    <p>{{emp.name}} </p>
+                    {% endfor %} {% endcomment %}
+            {% comment %} <span>{{task.priority}} </span> {% endcomment %}
+            </li>
+            {% endfor %}
+    </ul>
+   </div>
+
+   <div>
+    {{tasks}}
+   </div>
+</body>
+</html>
