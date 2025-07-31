@@ -1,4 +1,4 @@
-{% load static %}
+{% comment %} {% load static %}
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -17,15 +17,86 @@
         {% endif %}
     </div>
     <form method="POST">
-        {% comment %} <input type="text" class="border-2 border-gray-300 w-full rounded-lg shadow-sm focus:border-rose-300 focus:ring-rose-500 ",placeholder="Enter a Task Titel"> {% endcomment %}
+        <input type="text" class="border-2 border-gray-300 w-full rounded-lg shadow-sm focus:border-rose-300 focus:ring-rose-500 ",placeholder="Enter a Task Titel">
         {% csrf_token %}
         {{form.as_p}}
         {% comment %} <label for="">Title</label>
         <input type="text" name="title">
         <label for="">Number</label>
         <input type="number" name="number"> {% endcomment %}
-        <button type="submit">submit</button>
+        {% comment %} <button type="submit">submit</button>
     </form>
    </div>
 </body>
+</html> {% endcomment %} 
+{% comment %} 
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Task Form</title>
+    <link rel="stylesheet" href="{% static 'css/output.css' %}">
+</head>
+<body class="bg-gray-100">
+    <h1 class="text-3xl font-bold text-red-600 text-center mt-6">Test Tailwind</h1>
+
+    <div class="w-1/2 mx-auto mt-8 bg-white p-6 rounded-lg shadow-md">
+        {% if message %}
+            <p class="text-green-600 font-medium mb-4">{{ message }}</p>
+        {% endif %}
+        <form method="POST">
+            {% csrf_token %}
+            {{ task_form.as_p }}
+            <button type="submit" class="mt-4 bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
+                Submit
+            </button>
+        </form>
+    </div>
+</body>
+</html> {% endcomment %}
+
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Create Task</title>
+  <link href="{% static 'css/output.css' %}" rel="stylesheet">
+</head>
+<body class="bg-gray-100 py-10">
+
+  <div class="max-w-2xl mx-auto bg-white p-8 rounded shadow">
+    <h1 class="text-2xl font-bold mb-6 text-center text-rose-700">Create a Task</h1>
+
+    {% if messages %}
+      {% for message in messages %}
+        <p class="text-green-600">{{ message }}</p>
+      {% endfor %}
+    {% endif %}
+
+    <form method="POST">
+      {% csrf_token %}
+
+      <div class="space-y-6">
+        <div>
+          <h2 class="text-lg font-semibold mb-2">Task Info</h2>
+          {{ task_form.as_p }}
+        </div>
+
+        <div>
+          <h2 class="text-lg font-semibold mb-2">Task Details</h2>
+          {{ task_detail_form.as_p }}
+        </div>
+      </div>
+
+      <button type="submit" class="mt-6 w-full bg-rose-600 text-white font-semibold py-2 rounded hover:bg-rose-700">
+        Submit
+      </button>
+    </form>
+  </div>
+
+</body>
 </html>
+

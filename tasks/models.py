@@ -1,4 +1,7 @@
 from django.db import models
+# from tasks.forms import TaskDetailModelForm
+
+from datetime import date
 
 # Create your models here.
 class Employee(models.Model):
@@ -8,7 +11,8 @@ class Employee(models.Model):
     def __str__(self):
         return self.name
 
-
+# project = Project.objects.create(name="Test Project", start_date="2024-01-01")
+# emp = Employee.objects.create(name="Hasan", email="hasan@example.com")
 class Task(models.Model):
     STATUS_CHOICES=[
         ('COMPLETED','Completed'),
@@ -16,11 +20,11 @@ class Task(models.Model):
         ('UNCOMPLETED','UNCOMPLETED')
     ]
     project=models.ForeignKey(
-        "project",
+        "Project",
         on_delete=models.CASCADE,
         default=1
     )
-    assigned_to=models.ManyToManyField(Employee,related_name='tasks')
+    assigned_to=models.ManyToManyField('Employee',related_name='tasks')
     # Project=models.ForeignKey("Project",on_delete=models.CASCADE)
     title =models.CharField(max_length=250)
     description=models.TextField()
@@ -44,7 +48,7 @@ class TaskDetail(models.Model):
         ('LOW','Low')
     )
     # std_id=models.CharField(max_length=200,primary_key=True)
-    task=models.OneToOneField(Task,on_delete=models.CASCADE,related_name='details')
+    task=models.OneToOneField('Task',on_delete=models.CASCADE,related_name='details')
     assigned_to=models.CharField(max_length=100)
     priority=models.CharField(max_length=6,choices=PRIORITY_OPTIONS,default='L')
     notes=models.TextField(blank=True,null=True)
