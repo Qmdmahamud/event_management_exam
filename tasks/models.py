@@ -57,6 +57,7 @@ class TaskDetail(models.Model):
         return f"Details form Task{self.task.title}"
 
 class Project(models.Model):
+    title=models.CharField(max_length=100,default="Untitled Project")
     name=models.CharField(max_length=100)
     description=models.TextField(blank=True,null=True)
     start_date=models.DateField()

@@ -14,56 +14,78 @@ def home(request):
 def manager_dashboard(request):
     
     return render(request,"manager_dashboard.html")
-def event_base(request):
-    type=request.GET.get('type','all')
-    task_form=TaskModelForm()
-    counts=Task.objects.aggregate(
-        total=Count('id'),
-        completed=Count('id',filter=Q(status='COMPLETED')),
-        in_progress=Count('id',filter=Q(status='IN_PROGRESS')),
-        upcoming_events=Count('id',filter=Q(status='UNCOMPLETED'))
+# def event_base(request):
+#     type=request.GET.get('type','all')
+#     task_form=TaskModelForm()
+#     counts=Task.objects.aggregate(
+#         total=Count('id'),
+#         completed=Count('id',filter=Q(status='COMPLETED')),
+#         in_progress=Count('id',filter=Q(status='IN_PROGRESS')),
+#         upcoming_events=Count('id',filter=Q(status='UNCOMPLETED'))
 
-    )
-      #Retriving task data
-    base_query=Task.objects.select_related('details').prefetch_related('assigned_to')
-    if type=='completed':
-        tasks=base_query.filter(status='COMPLETED')
-    elif type=='in-progress':
-        tasks=base_query.filter(status='IN_PROGRESS')
-    elif type=='uncompleted':
-        tasks=base_query.filter(status='UNCOMPLETED')
-    elif type=='all':
-        tasks=base_query.all()
-    # context={
-    #     "tasks":tasks,
-    #     "counts":counts
-    # }
-    print("✅ event_base view is being called!")
-    # tasks=Task.objects.select_related('details').prefetch_related('assigned_to').all()
-    # tasks=Task.objects.select_related('details').prefetch_related('assigned_to').all()
-    # tasks=Task.objects.all()
-    # total_task=tasks.count()
-    # uncompleted_events=Task.objects.filter(status="UNCOMPLETED").count()
-    # in_progress_task=Task.objects.filter(status="IN_PROGRESS").count()
-    # completed_task=Task.objects.filter(status="COMPLETED").count()
-    # today = date.today()
-    # upcoming_events = Task.objects.filter(status="UNCOMPLETED",due_date__gt=today)
-    # completed_events = Task.objects.filter(status="COMPLETED", due_date__lt=today)
-    # all_events = Task.objects.all()
+#     )
+#       #Retriving task data
+#     base_query=Task.objects.select_related('details').prefetch_related('assigned_to')
+#     if type=='completed':
+#         tasks=base_query.filter(status='COMPLETED')
+#     elif type=='in-progress':
+#         tasks=base_query.filter(status='IN_PROGRESS')
+#     elif type=='uncompleted':
+#         tasks=base_query.filter(status='UNCOMPLETED')
+#     elif type=='all':
+#         tasks=base_query.all()
+
+#     print("event_base view is being called!")
    
-    context={
-        "tasks":tasks,
-        "counts":counts,
-        "task_form":task_form
-        # "total_task":total_task,
-        # "uncompleted_task":uncompleted_events,
-        # "completed_task":completed_task,
-        # "in_progress_task":in_progress_task,
-        # "upcoming_events": upcoming_events,
-        # "completed_events": completed_events,
-        # "all_events": all_events,
+#     context={
+#         "tasks":tasks,
+#         "counts":counts,
+#         "task_form":task_form
+#     }
+#     return render(request,"event_base.html",context)
+def event_base(request):
+    type = request.GET.get('type', 'all')
+
+    
+    if request.method == "POST":
+        task_form = TaskModelForm(request.POST) 
+        if task_form.is_valid():
+            task_form.save()
+            messages.success(request, "Task created successfully!")
+            return redirect('event_manager') 
+    else:
+        task_form = TaskModelForm() 
+
+   
+    counts = Task.objects.aggregate(
+        total=Count('id'),
+        completed=Count('id', filter=Q(status='COMPLETED')),
+        in_progress=Count('id', filter=Q(status='IN_PROGRESS')),
+        upcoming_events=Count('id', filter=Q(status='UNCOMPLETED'))
+    )
+
+  
+    base_query = Task.objects.select_related('details').prefetch_related('assigned_to')
+
+   
+    if type == 'completed':
+        tasks = base_query.filter(status='COMPLETED')
+    elif type == 'in-progress':
+        tasks = base_query.filter(status='IN_PROGRESS')
+    elif type == 'uncompleted':
+        tasks = base_query.filter(status='UNCOMPLETED')
+    else:
+        tasks = base_query.all()
+
+ 
+    context = {
+        "tasks": tasks,
+        "counts": counts,
+        "task_form": task_form,
     }
-    return render(request,"event_base.html",context)
+
+    return render(request, "event_base.html", context) 
+
 def contruct(request):
     return HttpResponse("This is contruct page")
 def show_task(request):
