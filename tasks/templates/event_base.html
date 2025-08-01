@@ -111,7 +111,7 @@
   <div class="flex flex-col md:flex-row gap-6">
 
     <!-- Upcoming Events -->
-     <a href="{% url "event_manager" %} "?type=completed>
+     <a href="{% url 'event_manager' %} "?type=upcoming_events>
     <section class="flex-1 bg-white shadow p-6 rounded-lg">
       <h3 class="text-xl font-semibold mb-4 text-blue-600">Upcoming Events</h3>
       {% for event in tasks %}
@@ -140,13 +140,13 @@
       </div>
       {% empty %}
       <p class="text-gray-500">{{total_task}}</p>
-      <h1>Mahamud hasan n</h1>
+      {% comment %} <h1>Mahamud hasan n</h1> {% endcomment %}
       {% endfor %}
     </section>
     </a>
 
     <!-- Completed Events -->
-   <a href="{% url "event_manager" %} "?type=completed>
+   <a href="{% url 'event_manager' %} "?type=completed>
      <section class="flex-1 bg-white shadow p-6 rounded-lg">
       <h3 class="text-xl font-semibold mb-4 text-green-600">Completed Events</h3>
       {% for event in tasks %}
@@ -178,7 +178,7 @@
 
    </a>
     <!-- Total Events -->
-     <a href="{% url "event_manager" %} "?type=completed>
+     <a href="{% url 'event_manager' %} "?type=completed>
     <section class="flex-1 bg-white shadow p-6 rounded-lg">
       <h3 class="text-xl font-semibold mb-4 text-purple-600">Total Events</h3>
       {% for event in tasks %}
