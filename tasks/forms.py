@@ -1,6 +1,8 @@
 from django import forms
 from tasks.models import Task,TaskDetail
 # from tasks.forms import StyledFormMIxin
+# from django.contrib.auth.models import User
+# from django.contrib.auth.forms import UserCreationForm
 
 class StyledFormMixin:
     default_classes="border-2 border-gray-300 w-full rounded-lg shadow-sm focus:border-rose-300 focus:ring-rose-500 "
@@ -53,26 +55,7 @@ class TaskModelForm(StyledFormMixin, forms.ModelForm):
             'due_date':forms.SelectDateWidget(),
             'assigned_to':forms.CheckboxSelectMultiple(),
         }
-        # widgets={
-        #     'title':forms.TextInput(attrs={
-        #         'class':"border-2 border-gray-300 w-full rounded-lg shadow-sm focus:border-rose-300 focus:ring-rose-500 " ,
-        #         'placeholder':"Enter a Task Titel"
-                
-        #     }),
-        #     'description':forms.Textarea(attrs={
-        #         'class':"border-2 border-gray-300 w-full rounded-lg shadow-sm focus:border-rose-300 focus:ring-rose-500 " ,
-        #         'placeholder':"Descripbe the Task"}),
-        #         'rows':5,
-        #     'due_date':forms.SelectDateWidget(
-        #         attrs={
-        #         'class':"border-2 border-gray-300 w-full rounded-lg shadow-sm focus:border-rose-300 focus:ring-rose-500 " ,
-        #         }
-        #     ),
-        #     'assigned_to':forms.CheckboxSelectMultiple(attrs={
-        #         'class':"border-2 border-gray-300 w-full rounded-lg shadow-sm focus:border-rose-300 focus:ring-rose-500 " ,
-        #         }
-        #     )
-        # }
+       
     def __init__(self,*args, **kwargs):
         super().__init__(*args, **kwargs)
         self.apply_styled_widgets()
@@ -84,3 +67,5 @@ class TaskDetailModelForm(StyledFormMixin,forms.ModelForm):
     def __init__(self,*args,**kwargs):
         super().__init__(*args,**kwargs)
         self.apply_styled_widgets()
+
+

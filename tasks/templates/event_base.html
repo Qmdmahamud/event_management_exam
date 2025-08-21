@@ -12,15 +12,27 @@
    
 </head>
 <body class="bg-gray-100 text-gray-800">
+    {% comment %} {% if request.user.is_authenticated %}
+      {% include "login.html" %}
+    {% else %}
+      {% include "signup.html" %}
+    {% endif %} {% endcomment %}
 
   <!-- Header -->
   <header class="bg-blue-600 text-white p-4">
     <div class="container mx-auto flex justify-between items-center">
       <h1 class="text-2xl font-bold">Event Management</h1>
       <nav>
+        {% comment %} {% include "users/login.html" %} {% endcomment %}
         <a href="#events" class="mx-3 hover:underline">Events</a>
         <a href="#register" class="mx-3 hover:underline">Register</a>
         <a href="#contact" class="mx-3 hover:underline">Contact</a>
+        <a href="{% url 'signup' %}" class="mx-3 hover:underline">Sign Up</a>
+        <a href="{% url 'login' %}" class="mx-3 hover:underline">Sign In</a>
+        <a href="{% url 'login' %}" class="mx-3 hover:underline">Log In</a>
+{% comment %} login {% endcomment %}
+        {% comment %} <a href="#contact" class="mx-3 hover:underline">Sign Up</a>
+        <a href="#contact" class="mx-3 hover:underline">Sign In</a> {% endcomment %}
       </nav>
     </div>
   </header>
@@ -46,170 +58,15 @@
   <a href="?type=uncompleted" class="mx-3 hover:underline text-yellow-600">Upcoming</a>
   <a href="?type=completed" class="mx-3 hover:underline text-green-600">Completed</a>
   <a href="?type=in-progress" class="mx-3 hover:underline text-purple-600">In Progress</a>
- </div>
+  {% comment %} {% block conten %} {% endcomment %}
+  {% comment %} {% include "users/login.html" %} {% endcomment %}
+  {% comment %} {% endblock conten %} {% endcomment %}
 
-
-  <!-- Upcoming Events -->
- {% comment %} <div class="container mx-auto px-4 py-8"> {% endcomment %}
- {% comment %} <div class="bg-gray-200 py-20 text-center grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6 ">
-    {% comment %} <a href="{% url "" %} "?type=completed> {% endcomment %}
-    {% comment %} <a href="#completed_events" class="mx-3 hover:underline">
-
-     <section id="events" class="py-16 container mx-auto px-4">
-    <h3 class="text-3xl font-semibold mb-8 text-center text-blue-400">Upcoming Events</h3>
-    <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
-      {% for event in events %}
-      <div class="bg-white shadow p-6 rounded-lg">
-        <h4 class="text-xl font-bold mb-2">{{ event.title }}</h4>
-        <p class="mb-2">Date: {{ event.date }}</p>
-        <p class="mb-2">Location: {{ event.location }}</p>
-        <p>{{ event.description }}</p> {% endcomment %}
-        {% comment %} <h1 class="text-red-600"> Mahamud Hasan</h1>
-        <button type="submit" class="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700">Submit</button> {% endcomment %}
-      {% comment %} {% endfor %}
-    </div>
-  </section>
-  </a>
-  <a href="#events" class="mx-3 hover:underline">
-  <section id="events" class="py-16 container mx-auto px-4">
-    <h3 class="text-3xl font-semibold mb-8 text-center text-rose-400">Completed Events</h3>
-    <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
-      {% for event in events %}
-      <div class="bg-white shadow p-6 rounded-lg">
-        <h4 class="text-xl font-bold mb-2">{{ event.title }}</h4>
-        <p class="mb-2"> Date: {{ event.date }}</p>
-        <p class="mb-2">Location: {{ event.location }}</p>
-        <p>{{ event.description }}</p>
-      </div>
-      {% endfor %}
-    </div>
-  </section> {% endcomment %}
-  {% comment %} </a>
-  <a href="#events" class="mx-3 hover:underline">
-  <section id="events" class="py-16 container mx-auto px-4">
-    <h3 class="text-3xl font-semibold mb-8 text-center text-purple-500">Total Events</h3>
-    <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
-      {% for event in events %}
-      <div class="bg-white shadow p-6 rounded-lg">
-        <h4 class="text-xl font-bold mb-2">{{ event.title }}</h4>
-        <p class="mb-2">Date: {{ event.date }}</p>
-        <p class="mb-2">Location: {{ event.location }}</p>
-        <p>{{ event.description }}</p>
-        
-      </div>
-      {% endfor %}
-    </div>
-  </section>
-</a>
- </div>  {% endcomment %} 
-
- <!-- Events Overview Section -->
-<div id="events" class="container mx-auto px-4 py-16">
-  <h2 class="text-3xl font-bold text-center mb-8">Events Overview</h2>
-
-  <!-- Flex wrapper: Column on mobile, Row on desktop -->
-  <div class="flex flex-col md:flex-row gap-6">
-
-    <!-- Upcoming Events -->
-     <a href="{% url 'event_manager' %} "?type=upcoming_events>
-    <section class="flex-1 bg-white shadow p-6 rounded-lg">
-      <h3 class="text-xl font-semibold mb-4 text-blue-600">Upcoming Events</h3>
-      {% for event in tasks %}
-      <div class="mb-4 border-b pb-2">
-        <h4 class="font-bold">{{ event.title }}</h4>
-        <p class="text-sm"> {{ event.date }}</p>
-        <p class="text-3xl font-semibold mb-1">{{event.title}} </p>
-        {% comment %} <p>Mahamud hasans</p>
-        <h1>Mahamud hasan noman</h1> {% endcomment %}
-       
-        {% comment %} <p class="text-3xl font-semibold mb-1">{{uncompleted_task}} </p> {% endcomment %}
-        <p class="text-sm">{{ event.location }}</p>
-        <p class="text-sm text-gray-600">{{ event.description }}</p>
-          {% comment %} <h1 class="text-red-600"> Mahamud Hasan</h1>
-        <button type="submit" class="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700">Submit</button> {% endcomment %}
-         <div class="flex justify-between items-center">
-          <a href="{% url 'update-task' event.id %} " class="mx-3 hover:underline">
-        <button type="submit" class="px-2 py-2 rounded-full text-blue-600  bg-blue-100 ">Edit</button>
-        </a>
-        {% comment %} {% endfor %} {% endcomment %}
-        <a href="{% url 'delete-task' event.id %}" class="mx-3 hover:underline">
-          <button type="submit" class="px-2 py-2 rounded-full bg-red-300 text-white">Delete</button>
-        </a>
-
-        </div>
-      </div>
-      {% empty %}
-      <p class="text-gray-500">{{total_task}}</p>
-      {% comment %} <h1>Mahamud hasan n</h1> {% endcomment %}
-      {% endfor %}
-    </section>
-    </a>
-
-    <!-- Completed Events -->
-   <a href="{% url 'event_manager' %} "?type=completed>
-     <section class="flex-1 bg-white shadow p-6 rounded-lg">
-      <h3 class="text-xl font-semibold mb-4 text-green-600">Completed Events</h3>
-      {% for event in tasks %}
-      <div class="mb-4 border-b pb-2">
-        <h4 class="font-bold">{{ event.title }}</h4>
-        <p class="text-sm">{{ event.date }}</p>
-        {% comment %} <h1 class="bg-red-700">Mahamud Hasan</h1> {% endcomment %}
-        <p class="text-3xl font-semibold mb-1">{{completed}} </p>
-        {% comment %} print("mahamud hasan") {% endcomment %}
-        {% comment %} <p>Mahamud hasan noman</p> {% endcomment %}
-        <p class="text-sm">📍 {{ event.location }}</p>
-        <p class="text-sm text-gray-600">{{ event.description }}</p>
-        <div class="flex justify-between items-center">
-          <a href="{% url 'update-task' event.id %} " class="mx-3 hover:underline">
-        <button type="submit" class="px-2 py-2 rounded-full text-blue-600  bg-blue-100 ">Edit</button>
-        </a>
-        {% comment %} {% endfor %} {% endcomment %}
-        <a href="{% url 'delete-task' event.id %}" class="mx-3 hover:underline">
-          <button type="submit" class="px-2 py-2 rounded-full bg-red-300 text-white">Delete</button>
-        </a>
-
-        </div>
-        
-      </div>
-      {% empty %}
-      <p class="text-gray-500">No completed events.</p>
-      {% endfor %}
-    </section>
-
-   </a>
-    <!-- Total Events -->
-     <a href="{% url 'event_manager' %} "?type=completed>
-    <section class="flex-1 bg-white shadow p-6 rounded-lg">
-      <h3 class="text-xl font-semibold mb-4 text-purple-600">Total Events</h3>
-      {% for event in tasks %}
-      <div class="mb-4 border-b pb-2">
-        <h4 class="font-bold">{{ event.title }}</h4>
-        <p class="text-sm">📅 {{ event.date }}</p>
-        {% comment %} <p class="text-3xl font-semibold mb-1">7 </p> {% endcomment %}
-         <p class="text-sm text-gray-500">Total: {{ all_events|length }}</p>
-
-        {% comment %} <p class="text-3xl font-semibold mb-1">{{total_task}} </p> {% endcomment %}
-        <p class="text-sm">📍 {{ event.location }}</p>
-        <p class="text-sm text-gray-600">{{ event.description }}</p>
-        <div class="flex justify-between items-center">
-           <a href="{% url 'update-task' event.id %} " class="mx-3 hover:underline">
-        <button type="submit" class="px-2 py-2 rounded-full text-blue-600  bg-blue-100 ">Edit</button>
-        </a>
-        {% comment %} {% endfor %} {% endcomment %}
-        <a href="{% url 'delete-task' event.id %}" class="mx-3 hover:underline">
-          <button type="submit" class="px-2 py-2 rounded-full bg-red-300 text-white">Delete</button>
-        </a>
-        </div>
-      </div>
-      {% empty %}
-      <p class="text-gray-500">No events found.</p>
-      {% endfor %}
-    </section>
-    </a>
-
-  </div>
 </div>
+{% block content %}
 
+  {% include "event_overview.html" %}
+{% endblock content %}
 
   <!-- Registration Form -->
   <section id="register" class="bg-white py-16 px-4">

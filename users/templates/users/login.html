@@ -1,0 +1,23 @@
+{% comment %} {% extends "event_base.html" %} {% endcomment %}
+{% comment %} {% block content %} {% endcomment %}
+
+
+{% comment %} from django.shortcuts import render, redirect
+from django.contrib.auth.forms import UserCreationForm {% endcomment %}
+{% comment %} <h2>Login</h2> {% endcomment %}
+ 
+
+<div class='w-1/2 mx-auto py-9'>
+    
+        {% if messages %}
+           {% for message in messages %}
+           <div class="px-2 py-1 {% if message.tags == 'success' %} bg-green-500{% endif %} ">{{message}} </div>
+           {% endfor %}
+        {% endif %}
+<form method="post" action="">
+  {% csrf_token %}
+  {{ form.as_p }}
+  <button  type="submit">Login</button>
+</form>
+</div>
+{% comment %} {% endblock content %} {% endcomment %}

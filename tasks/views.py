@@ -6,43 +6,21 @@ from datetime import date
 from django.utils.timezone import now
 from django.db.models import Q,Count,Max,Min,Avg
 from django.contrib import messages
+# from django.shortcuts import render, redirect
+# from django.contrib.auth import authenticate, login, logout
+# from django.contrib.auth.forms import AuthenticationForm
+# from .forms import SignUpForm
 
 # Create your views here.
 def home(request):
     # return HttpResponse("Welcome to the Event Management System ")
-    return render(request,"home.html")
+    return render(request,"event_base.html")
+def event_overview(request):
+    return render(request,"event_overview.html")
 def manager_dashboard(request):
     
     return render(request,"manager_dashboard.html")
-# def event_base(request):
-#     type=request.GET.get('type','all')
-#     task_form=TaskModelForm()
-#     counts=Task.objects.aggregate(
-#         total=Count('id'),
-#         completed=Count('id',filter=Q(status='COMPLETED')),
-#         in_progress=Count('id',filter=Q(status='IN_PROGRESS')),
-#         upcoming_events=Count('id',filter=Q(status='UNCOMPLETED'))
 
-#     )
-#       #Retriving task data
-#     base_query=Task.objects.select_related('details').prefetch_related('assigned_to')
-#     if type=='completed':
-#         tasks=base_query.filter(status='COMPLETED')
-#     elif type=='in-progress':
-#         tasks=base_query.filter(status='IN_PROGRESS')
-#     elif type=='uncompleted':
-#         tasks=base_query.filter(status='UNCOMPLETED')
-#     elif type=='all':
-#         tasks=base_query.all()
-
-#     print("event_base view is being called!")
-   
-#     context={
-#         "tasks":tasks,
-#         "counts":counts,
-#         "task_form":task_form
-#     }
-#     return render(request,"event_base.html",context)
 def event_base(request):
     type = request.GET.get('type', 'all')
 
@@ -52,7 +30,7 @@ def event_base(request):
         if task_form.is_valid():
             task_form.save()
             messages.success(request, "Task created successfully!")
-            return redirect('event_manager') 
+            return redirect('event_base') 
     else:
         task_form = TaskModelForm() 
 
@@ -118,35 +96,12 @@ def create_task(request):
             task_detail.save()
             messages.success(request,"Task Created Successfully")
             return redirect('create-task')
-            # return render(request,'task_form.html',{"form":TaskModelForm(),"message":"Task added succesfully"})
-            '''For django form data'''
-            # data=form.cleaned_data
-            # title=data.get('title')
-            # description=data.get('description')
-            # due_date=data.get('due_date')
-            # assigned_to=data.get('assigned_to')
             
-            # task=Task.objects.create(title=title,description=description,due_date=due_date)
-            # # task.objects.add()
-            # for emp_id in assigned_to:
-            #     employee=Employee.objects.get(id=emp_id)
-            #     task.assigned_to.add(employee)
-            # return HttpResponse("Task Added successfully")
-            # print(form.cleaned_data)
     context={"task_form":task_form,"task_detail_form":task_detail_form}
     return render(request,"task_form.html",context)
 
 def view_task(request):
-    # tasks=Task.objects.all()
-    # task_3=Task.objects.get(id=1)
-    # tasks=Task.objects.filter(status='UNCOMPLETED')
-    # tasks=Task.objects.filter(due_date=date.today())
-    # tasks=TaskDetail.objects.exclude(priority="L")
-    # tasks=Task.objects.filter(title__icontains="p",status="COMPLETED")
-    # tasks=TaskDetail.objects.select_related('task').all()
-    # tasks=Task.objects.prefetch_related('assigned_to').all()
-    # tasks=Project.objects.annotate(num_task=Count('task')).order_by('num_task')
-    # task_count=Task.objects.aggregate(num_task=Count('id'))
+   
     task_count=Project.objects.annotate(num_task=Count('task'))
     print("✅ task_count =>", task_count) 
     return render(request,"show_task.html",{"task_count":task_count})
@@ -187,3 +142,4 @@ def delete_task(request,id):
     else:
         messages.success(request,'task deleted Error')
         return redirect('event_manager')
+    
