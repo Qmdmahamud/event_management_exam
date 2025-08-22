@@ -91,12 +91,12 @@ WSGI_APPLICATION = 'event_management.wsgi.application'
 
 
 # for sqlite databage 
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
-    }
-}
+# DATABASES = {
+#     'default': {
+#         'ENGINE': 'django.db.backends.sqlite3',
+#         'NAME': BASE_DIR / 'db.sqlite3',
+#     }
+# }
 
 # for postgres
 # DATABASES = {
@@ -109,13 +109,13 @@ DATABASES = {
 #         'PORT': '5432'
 #     }
 # }
-# DATABASES = {
-#     'default': dj_database_url.config(
-#         # Replace this value with your local database's connection string.
-#         default='postgresql://event_management_jfwr_user:ti6trKtBrUq2WKHZu7bFtnhmv2oPA20i@dpg-d25m8hh5pdvs73dofmg0-a.oregon-postgres.render.com/event_management_jfwr',
-#         conn_max_age=600
-#     )
-# }
+DATABASES = {
+    'default': dj_database_url.config(
+        # Replace this value with your local database's connection string.
+        default='postgresql://event_management_jfwr_user:ti6trKtBrUq2WKHZu7bFtnhmv2oPA20i@dpg-d25m8hh5pdvs73dofmg0-a.oregon-postgres.render.com/event_management_jfwr',
+        conn_max_age=600
+    )
+}
 
 SECRET_KEY = config('SECRET_KEY')
 
